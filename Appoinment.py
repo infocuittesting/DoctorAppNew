@@ -2,12 +2,13 @@ from sqlwrapper import gensql, dbget, dbput
 import json
 import datetime
 import time
+from datetime import timedelta
 from time import mktime
 from flask import Flask, request, jsonify
 
 
 def tokengeneration(request):
-    try:
+   # try:
         d = request.json
         mob = json.loads(dbget("select count(*) as mobile from new.appointment where mobile ='"+d['mobile']+"' and business_date = '" + str(d['business_date']) + "' "))
         if mob[0]['mobile'] == 1:
@@ -27,7 +28,8 @@ def tokengeneration(request):
                 b = json.loads(dbget("select end_timing from new.timing where doctor_id = '" + str(docidval)+"' and business_id = '"+str(bus_id)+"'\
                                     and day = '"+str(x)+"' and session='evening'"))
                 etime = b[0]['end_timing']  # to get value from list
-                if dt == todaydate and etime > todaytime:
+                future = todaydate+timedelta(days=6)
+                if dt <= future and etime > todaytime:
                     a = {k: v for k, v in d.items() if k in ('doctor_id', 'business_id', 'business_date')}
                     res = json.loads(gensql('select', 'new.token_no', 'count(*)', a))
                     if res[0]['count'] == 0:
@@ -40,6 +42,10 @@ def tokengeneration(request):
                         no = token[0]['token_no'] + 1
                     d['token_no'] = no
                     d['token_time'] = currenttime
+                    app =json.loads(dbget("select app_id from new.app_id "))
+                    d['app_id'] = app[0]['app_id']+1
+                    appoint_id = d['app_id']
+                    dbput("update new.app_id set app_id ='"+str(d['app_id'])+"'")
                     gensql('insert', 'new.appointment', d)
                     wt = json.loads(dbget("select average_waiting_time from new.doctorinbusiness where doctor_id = '"+str(docidval)+"' and business_id = '"+str(bus_id)+"'"))
                     waittime = wt[0]['average_waiting_time']
@@ -48,17 +54,14 @@ def tokengeneration(request):
                     else:
                         avg_wait = (no - 1) * waittime
                     dbput("update new.token_no set token_no ='"+str(no)+"' where doctor_id='"+str(a['doctor_id'])+"' and business_id = '"+str(bus_id)+"'")
-                    return (json.dumps(
-                        {'Message': 'Token Generated', 'Message_Code': 'TGS', 'Status': 'success', 'Token_No': no,
-                         'waiting_time': avg_wait}, indent=4))
+                    return (json.dumps({'Message': 'Token Generated', 'Message_Code': 'TGS', 'Status': 'success', 'Token_No': no,'waiting_time':avg_wait,'appointment_id':appoint_id}, indent=4))
 
                 else:
-                    return (json.dumps({"Message": "Token should be Generated only for Today Date", "Message_Code": "TGTD",
-                                        "Service Status": "Failure"}, indent=4))
+                    return (json.dumps({"Message": "Token should be Generated from Today to next 7 Days only", "Message_Code": "TGTD","Service Status": "Failure"}, indent=4))
         else:
                 return(json.dumps({'Message': 'Invalid Data', 'Message_Code': 'ID', 'Status': 'Failure'},indent=4))
-    except:
-        return (json.dumps({"Message": "Token Generation UnSuccessful", "Message_Code": "TGUS", "Service_Status": "Failure"},indent=4))
+ #   except:
+     #   return (json.dumps({"Message": "Token Generation UnSuccessful", "Message_Code": "TGUS", "Service_Status": "Failure"},indent=4))
 
 
 def selectappointment(request):
@@ -70,13 +73,9 @@ def selectappointment(request):
             d['doctor_id']) + "' and new.appointment.business_id = '" + str(d['business_id']) + "'\
                                            and new.appointment.business_date = '" + str(
             d['business_date']) + "' order by new.appointment.token_no"))
-        return (json.dumps(
-            {"Message": "Appointments Selected Sucessfully", "Message_Code": "ASS", "Service_Status": "Success",
-             "output": output}, indent=4))
+        return (json.dumps({"Message": "Appointments Selected Sucessfully", "Message_Code": "ASS", "Service_Status": "Success","output": output}, indent=4))
     except:
-        return (json.dumps(
-            {"Message": "Appointments Selected Unsuccessful", "Message_Code": "ASUS", "Service_Status": "Failure"},
-            indent=4))
+        return (json.dumps({"Message": "Appointments Selected Unsuccessful", "Message_Code": "ASUS", "Service_Status": "Failure"},indent=4))
 def updatetoken(request):
     try:
         d = request.json

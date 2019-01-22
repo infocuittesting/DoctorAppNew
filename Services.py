@@ -1,6 +1,7 @@
 from flask import Flask,request,jsonify
 from sqlwrapper import gensql,dbget,dbput
 import json
+import re
 def insertservices(request):
     try:
         d=request.json

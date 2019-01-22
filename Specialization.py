@@ -1,13 +1,13 @@
 from flask import Flask,request,jsonify
 from sqlwrapper import gensql,dbget,dbput
 import json
+import re
 def insertspecialization(request):
     try:
         d=request.json
         e = request.json['specialization_name']
         regex = re.compile('[a-zA-Z]')
         specialization_name = json.loads(dbget("select count(*) as specialization_name from new.specialization where specialization_name ='"+e+"'"))
-        print(specialization_name)
         if specialization_name[0]['specialization_name'] == 1:
             return(json.dumps({"Message":"Already Exists","Message_Code":"AE","Service_Status":"Failure"},indent=4))
         

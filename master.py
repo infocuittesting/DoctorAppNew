@@ -53,6 +53,13 @@ from city import InsertCity
 from city import SelectCity
 from city import UpdateCity
 from city import deleteCity
+#------------Reports---------------#
+from reports import weeklyreport
+from reports import locationreport
+from reports import weekdayreport
+from reports import token_report
+from reports import illness_report
+from reports import channel_report
 #---------------Send Email----------------#
 from SendEmailAll import callFn
 from SendEmail import callfn
@@ -241,11 +248,29 @@ def Select_city():
 @app.route('/delect_city',methods=['post'])
 def delete_City():
     return deleteCity(request)
+#-----------Reports-------------------#
+@app.route('/Weeklyreport',methods=['post'])
+def weekly_report():
+    return weeklyreport(request)
+@app.route('/Locationreport',methods=['post'])
+def location_report():
+    return locationreport(request)
+@app.route('/Weekdayreport',methods=['post'])
+def weekday_report():
+    return weekdayreport(request)
+@app.route('/dailystatusreport',methods=['POST'])
+def statusreport():
+   return token_report(request)
+@app.route('/illnessbasedreport',methods=['POST'])
+def illnessbasedreport():
+   return illness_report(request)
+@app.route('/channelbasedreport',methods=['POST'])
+def channelbasedreport():
+   return channel_report(request)
 #-----------------Send Email-----------------#
 @app.route('/SendEmailAll',methods=['post'])
 def Sendemailall():
     return callFn(request)
-
 @app.route('/SendEmail',methods=['post'])
 def Sendemail():
     return callfn(request)
@@ -267,5 +292,5 @@ def Select_BusinessDoctors():
 
 
 if __name__ == '__main__':
-   app.run(host="192.168.1.11",port=5000)
+   app.run(host="192.168.1.4",port=5000)
 

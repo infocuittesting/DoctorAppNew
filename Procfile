@@ -11,3 +11,4 @@ worker: gunicorn SendEmailAll.py
 worker: gunicorn SendEmail.py
 worker: gunicorn SendSMS.py
 worker: gunicorn Select_BusinessAndDoctors.py
+worker: gunicorn reports.py

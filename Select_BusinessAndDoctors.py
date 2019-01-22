@@ -5,7 +5,7 @@ import time
 from flask import Flask,request,jsonify
 
 def Select_BusinessandDoctors(request):
-  #try:
+  try:
     st_time = time.time()
     d = request.json
     # Get all business profile from db dpends on county and city
@@ -41,9 +41,7 @@ def Select_BusinessandDoctors(request):
     #print("sp",specialist)
     # Main  loop
     for i in specialist:
-        #print("listofspecial",i)
         for a in i:
-          #print("a",a)
           b_id = a['business_id']
           #print("id",b_id)
           new_dict = {k:v for k,v in a.items()
@@ -56,9 +54,8 @@ def Select_BusinessandDoctors(request):
           # Loop for format timing of business profile
           for t in timing:
               timing[timing.index(t)] = {'day':t['day'],
-                                         'timing':""+datetime.strptime(t['start_timing'], "%H:%M").strftime("%I:%M %p")+"-"
+                                         'time':""+datetime.strptime(t['start_timing'], "%H:%M").strftime("%I:%M %p")+"-"
                                                 ""+datetime.strptime(t['start_timing'], "%H:%M").strftime("%I:%M %p")+""}
-                                                #,'evening':''}
           new_dict['clinic_images'] = [{"img":""},{"img":""},{"img":""}]
           new_dict['clinic_timings'] = timing
           doctorinbusiness = json.loads(dbget("select * from new.doctor_profile where "
@@ -67,67 +64,49 @@ def Select_BusinessandDoctors(request):
 
           # Doctor details inside the business details
           for docinbus in doctorinbusiness:
-              docinbus['doc_img'] = ""
-              docinbus['doc_available_date'] = "Fri,13 Dec"
-              docinbus['doc_available_location'] = ""
-              docinbus['doc_hospital'] = ""
-              docinbus['doc_feedback'] = ""
-
               docinbus['doctor_details'] = [docinbus.copy()]
               doc_timing = json.loads(dbget("select day,start_timing,end_timing from new.timing "
-                                        " where business_id='"+str(a['business_id'])+"'"
-                                        " and doctor_id='"+docinbus['doctor_profile_id']+"' "))
+                                        "where business_id='"+str(a['business_id'])+"'"
+                                        "and doctor_id='"+docinbus['doctor_profile_id']+"' "))
               #print("doc timing", doc_timing)
               # Loop for format timing of doctor profile
               for t in doc_timing:
                   #print("t",t,type(t))
                   doc_timing[doc_timing.index(t)] = {'day': t['day'],
-                                                 'morning': ""+datetime.strptime(t['start_timing'], "%H:%M").strftime("%I:%M %p")+"-"
-                                                 ""+datetime.strptime(t['start_timing'],"%H:%M").strftime("%I:%M %p")+""
-                                                 ,'evening':''}
+                                                 'time': ""+datetime.strptime(t['start_timing'], "%H:%M").strftime("%I:%M %p")+"-"
+                                                         ""+datetime.strptime(t['start_timing'],"%H:%M").strftime("%I:%M %p")+""}
                   #print("doc_timing", doc_timing,type(doc_timing))
               docinbus['doctor_details'][0]['doctorstimings'] = doc_timing
-
               docinbus['doctor_details'][0]['doctor_clinic'] = json.loads(dbget("select * from new.business_profile where "
                                                                                 " business_id in (SELECT business_id FROM new.doctorinbusiness "
                                                                                 " where doctor_id='"+docinbus['doctor_profile_id']+"')"))
-              for docbus in docinbus['doctor_details'][0]['doctor_clinic']:
-                  docbus['clinic_rating'] = ''
-                  docbus['clinic_kms'] = ''
-
-              docinbus['doctor_details'][0]['doctor_feedback'] = json.loads(dbget("select new.feedback.*,new.user_profile.user_name from new.feedback "
-                                                                                  " join new.user_profile on feedback.mobile=user_profile.mobile "
-                                                                                  " where business_id='"+str(a['business_id'])+"'"
-                                                                                  " and doctor_id='"+docinbus['doctor_profile_id']+"'"))
-              #print("cus_feedback",docinbus['doctor_details'][0]['doctor_feedback'])
-              for fe in docinbus['doctor_details'][0]['doctor_feedback']:
-                  fe['visited'] = '1 month ago'
-
+              docinbus['doctor_details'][0]['doctor_feedback'] = json.loads(dbget("select * from new.feedback where business_id"
+                                                                                "='"+str(a['business_id'])+"'"
+                                                                                " and doctor_id='"+docinbus['doctor_profile_id']+"'"))
               docinbus['doctor_details'][0]['doctor_clinic_img'] = [{"img":""},{"img":""},{"img":""}]
               docinbus['doctor_details'][0]['doctor_specialization'] = json.loads(dbget("SELECT new.specialization.* "
                                                                                         " FROM new.doctor_profile join new.doctor_specialization on"
                                                                                         " doctor_profile.doctor_profile_id = doctor_specialization.doctor_id"
                                                                                         " join new.specialization on doctor_specialization.specialization_id = "
                                                                                         " specialization.specialization_id"
-                                                                                        " where doctor_profile.doctor_profile_id='"+docinbus['doctor_profile_id']+"'"))
+                                                                                        " where doctor_profile.doctor_profile_id='"+str(a['business_id'])+"'"))
 
               docinbus['doctor_details'][0]['doctor_services'] = json.loads(dbget("SELECT new.services.* "
                                                                                   " FROM new.doctor_profile join new.doctor_services on"
                                                                                   " doctor_profile.doctor_profile_id = doctor_services.doctor_id"
                                                                                   " join new.services on doctor_services.service_id = services.service_id"
-                                                                                  " where doctor_profile.doctor_profile_id='"+docinbus['doctor_profile_id']+"'"))
+                                                                                  " where doctor_profile.doctor_profile_id='"+str(a['business_id'])+"'"))
           new_dict['clinic_doctor_list'] = doctorinbusiness
 
           for doc in doctorinbusiness:
               #if doc['specialist'] not in doc_only_specialist:
               #    doc_only.append(doc)
               try:
-
-                 #print(doc_only_specialist[''+doc['specialist']+''])
+                 print("try")
+                 print(doc_only_specialist[''+doc['specialist']+''])
                  doc_only_specialist[''+doc['specialist']+''].append(doc)
-                 #print("try")
               except:
-                  #print("except")
+                  print("except")
                   doc_only_specialist[''+doc['specialist']+''] = [doc]
 
           # Get service data for business profile
@@ -149,19 +128,22 @@ def Select_BusinessandDoctors(request):
           new_dict['clinic_open'] = "Open Today"
           a["clinic_details"] = [new_dict]
 
-        #print("doc_only_specialist",doc_only_specialist)
-
+        print("doc_only_specialist",doc_only_specialist)
         if i[0]['specialist'] in doc_only_specialist:
-            doc_list = doc_only_specialist[""+i[0]['specialist']+""]
+            doc_list = doc_only_specialist["" + i[0]['specialist'] + ""]
         else:
             doc_list = []
         specialist[specialist.index(i)] = {"name":i[0]['specialist'],"icon":"","Listofdoctors":[{"clinics":i,
                                            "Doctors":doc_list}]}
-        #print("sm_sp",specialist)
+        print("sm_sp",specialist)
     ed_time=time.time()
     full_time = ed_time - st_time
-    #print("spcialist", specialist)
+    print("spcialist", specialist)
     print("Time Taken",full_time)
     return (json.dumps(
-        {"Message": "Records Selected Sucessfully", "MessageCode": "RSS",
-         "Service Status": "Success","specialist":specialist}, indent=4))
+        {"Message": "Records Selected Sucessfully", "Message_Code": "RSS",
+         "Service_Status": "Success","specialist":specialist}, indent=4))
+  except:
+      return (json.dumps(
+          {"Message": "Records Un Selected Sucessfully", "Message_Code": "RUS",
+           "Service_Status": "Success", "specialist": specialist}, indent=4))
