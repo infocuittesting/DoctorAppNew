@@ -5,10 +5,8 @@ import time
 from datetime import timedelta
 from time import mktime
 from flask import Flask, request, jsonify
-
-
 def tokengeneration(request):
-   # try:
+    try:
         d = request.json
         mob = json.loads(dbget("select count(*) as mobile from new.appointment where mobile ='"+d['mobile']+"' and business_date = '" + str(d['business_date']) + "' "))
         if mob[0]['mobile'] == 1:
@@ -57,11 +55,12 @@ def tokengeneration(request):
                     return (json.dumps({'Message': 'Token Generated', 'Message_Code': 'TGS', 'Status': 'success', 'Token_No': no,'waiting_time':avg_wait,'appointment_id':appoint_id}, indent=4))
 
                 else:
-                    return (json.dumps({"Message": "Token should be Generated from Today to next 7 Days only", "Message_Code": "TGTD","Service Status": "Failure"}, indent=4))
+                    return (json.dumps({"Message": "Token should be Generated from Today to next 7 Days only", "Message_Code": "TGTD","Service Status": "Failure"},
+                                       indent=4))
         else:
                 return(json.dumps({'Message': 'Invalid Data', 'Message_Code': 'ID', 'Status': 'Failure'},indent=4))
- #   except:
-     #   return (json.dumps({"Message": "Token Generation UnSuccessful", "Message_Code": "TGUS", "Service_Status": "Failure"},indent=4))
+    except:
+        return (json.dumps({"Message": "Token Generation UnSuccessful", "Message_Code": "TGUS", "Service_Status": "Failure"},indent=4))
 
 
 def selectappointment(request):
@@ -93,24 +92,10 @@ def count(request):
         doctorid = json.loads(dbget("select count(*) as doctor_id from new.doctor_profile where doctor_profile_id ='"+d['doctor_id']+"'"))
         businessid = json.loads(dbget("select count(*) as business_id from new.business_profile where business_id ='"+str(d['business_id'])+"'"))
         if doctorid[0]['doctor_id'] == 1 and businessid[0]['business_id'] == 1:
-                b_count = json.loads(dbget("select count(*) as bo_count from new.appointment \
-                                              where token_status='Booked' and doctor_id='" + str(
-                    d['doctor_id']) + "' and business_id = '" + str(d['business_id']) + "'\
-                                               and new.appointment.business_date = '" + str(d['business_date']) + "'"))
-                booked_count = b_count[0]['bo_count']
-                c_count = json.loads(dbget("select count(*) as can_count from new.appointment \
-                                              where token_status='Cancel' and doctor_id='" + str(
-                    d['doctor_id']) + "' and business_id = '" + str(d['business_id']) + "'\
-                                               and new.appointment.business_date = '" + str(d['business_date']) + "'"))
-                canceled_count = c_count[0]['can_count']
-                co_count = json.loads(dbget("select count(*) as checkout_count from new.appointment \
-                                              where token_status='Checkout' and doctor_id='" + str(d['doctor_id']) + "' and business_id = '" + str(d['business_id']) + "' \
-                                              and new.appointment.business_date = '" + str(d['business_date']) + "'"))
-                cheout_count = co_count[0]['checkout_count']
-                return (json.dumps(
-                    {"Message": "Token number Counted  Sucessfully", "Message_Code": "TNS", "Service_Status": "Success"
-                        , "booked_count": booked_count, "canceled_count": canceled_count, "Checked_out": cheout_count},
-                    indent=4))
+                token_count = json.loads(dbget("select token_status,count(*) from new.appointment where doctor_id='" + str(d['doctor_id']) + "'\
+                       and business_id = '" + str(d['business_id']) + "'\
+                          and business_date = '" + str(d['business_date']) + "' group by token_status")) 
+                return (json.dumps({"Message": "Token_status Counted  Sucessfully", "Message_Code": "TCS", "Service_Status": "Success","token_status": token_count},indent=4))
         else:
               return(json.dumps({'Message': 'Invalid Data', 'Messag_Code': 'ID', 'Status': 'Failure'},indent=4))  
     except:
