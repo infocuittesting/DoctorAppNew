@@ -66,9 +66,6 @@ def token_report(request):
 
     except:
         return (json.dumps({"Message": "Token_status Counted UnSuccessful", "Message_Code": "TCUS", "Service_Status": "Failure"},indent=4))
-
-
-
 def illness_report(request):
     try:
         d = request.json
@@ -80,7 +77,6 @@ def illness_report(request):
                             indent=4))
     except:
         return (json.dumps({"Message": "Illness Counted UnSuccessful", "Message_Code": "ICUS", "Service_Status": "Failure"},indent=4))
-
 def channel_report(request):
     try:
         d = request.json
@@ -92,4 +88,13 @@ def channel_report(request):
                             indent=4))
     except:
         return (json.dumps({"Message": "channel Counted UnSuccessful", "Message_Code": "CCUS", "Service_Status": "Failure"},indent=4))
+def latlong_report(request):
+    try:
+        d = request.json
+        count = json.loads(dbget("select distinct new.user_profile.area,new.user_profile.location_lat,new.user_profile.location_long from new.appointment\
+                                 join new.user_profile on new.appointment.mobile=new.user_profile.mobile\
+                                     where doctor_id='"+d['doctor_id']+"' and business_id = '" + str(d['business_id'])+"'"))
+        return (json.dumps({"Message": "Latlong Selected  Sucessfully","Message_Code": "LSS", "Service_Status": "Success","ReturnValue":count},indent=4))
+    except:
+        return (json.dumps({"Message": "latlong  Selected UnSuccessful", "Message_Code": "LSUS", "Service_Status": "Failure"},indent=4))
         

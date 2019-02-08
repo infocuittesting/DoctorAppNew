@@ -2,6 +2,7 @@ import json
 from flask import Flask,request,jsonify
 import re
 from sqlwrapper import gensql,dbget,dbput
+import datetime
 def insertuser_profile(request):
     try:
         a=request.json
@@ -58,7 +59,30 @@ def deleteuser_profile(request):
 
     except:
         return(json.dumps({"Message":"Record Deleted UnSuccessfully","Message_Code":"RDUS","Service_Status":"UnSuccess"},indent=4)) 
-
+def myappointments(request):
+    try:
+        d = request.json
+        output = json.loads(dbget("select new.appointment.app_id, new.doctor_profile.doctor_name,new.business_profile.business_name,\
+                                     new.business_profile.business_name,new.business_profile.business_type,new.business_profile.address,\
+                                     new.business_profile.location_lat,new.business_profile.location_long,new.appointment.token_time,new.appointment.token_status,\
+                                    new.appointment.business_date,new.appointment.reason,new.appointment.token_no\
+                                    from new.user_profile join new.appointment on new.user_profile.mobile=new.appointment.mobile \
+                                    join new.business_profile on new.appointment.business_id=new.business_profile.business_id\
+                                    join new.doctor_profile on new.appointment.doctor_id=new.doctor_profile.doctor_profile_id\
+                                    where new.user_profile.mobile='"+str(d['mobile'])+"' order by token_time desc "))
+        today = datetime.datetime.utcnow().date()
+        print("today",today, type(today))
+        print("output", type(output))
+        for i in output:
+            if datetime.datetime.strptime(i['business_date'], '%Y-%m-%d').date()==today:
+                i['flag']='today'
+            elif datetime.datetime.strptime(i['business_date'], '%Y-%m-%d').date()<today:
+                i['flag']='past'
+            else:
+                i['flag']='future'
+        return(json.dumps({"Message":"Recored Selected Successfully","Message_Code":"RSS","Service":"Success","output":output},indent=4))
+    except:
+        return(json.dumps({"Message":"Record Selected UnSuccessfully","Message_Code":"RDUS","Service_Status":"UnSuccess"},indent=4)) 
         
         
            

@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify
 
 
 def sendsms(request):
-    try:
+    #try:
 
         count = []
         message = request.json['message']
@@ -50,7 +50,7 @@ def sendsms(request):
         return (json.dumps({"Message": "Sms Sent Successfully", "Message_Code": "SSS", "Service_Status": "Success"},
                            indent=2))
 
-    except:
-        return (json.dumps({"Message": "Sms Sent UnSuccessfully", "Message_Code": "SSUS", "Service_Status": "Failure"},
-                           indent=2))
+    #except:
+       # return (json.dumps({"Message": "Sms Sent UnSuccessfully", "Message_Code": "SSUS", "Service_Status": "Failure"},
+                           #indent=2))
 

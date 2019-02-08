@@ -4,6 +4,7 @@ from User_Profile import insertuser_profile
 from User_Profile import updateuser_profile
 from User_Profile import selectuser_profile
 from User_Profile import deleteuser_profile
+from User_Profile import myappointments
 #---------appionment-------#
 from Appoinment import tokengeneration
 from Appoinment import selectappointment
@@ -60,6 +61,7 @@ from reports import weekdayreport
 from reports import token_report
 from reports import illness_report
 from reports import channel_report
+from reports import latlong_report
 #---------------Send Email----------------#
 from SendEmailAll import callFn
 from SendEmail import callfn
@@ -88,6 +90,9 @@ def Select_User_Profile():
 @app.route('/Delete_User_Profile',methods=['POST'])
 def Delete_User_Profile():
     return deleteuser_profile(request)
+@app.route('/Select_My_Appointments',methods=['POST'])
+def MyAppointments():
+    return myappointments(request)
 #-----------appoinment-------------#
 @app.route('/InsertAppoinment',methods=['post'])
 def appoinment():
@@ -267,6 +272,9 @@ def illnessbasedreport():
 @app.route('/channelbasedreport',methods=['POST'])
 def channelbasedreport():
    return channel_report(request)
+@app.route('/latlongreport',methods=['POST'])
+def latlongreport():
+   return latlong_report(request)
 #-----------------Send Email-----------------#
 @app.route('/SendEmailAll',methods=['post'])
 def Sendemailall():
@@ -292,5 +300,5 @@ def Select_BusinessDoctors():
 
 
 if __name__ == '__main__':
-   app.run(host="192.168.1.4",port=5000)
+   app.run(host="192.168.1.29",port=5000)
 
