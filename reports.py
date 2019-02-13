@@ -60,9 +60,13 @@ def token_report(request):
         d = request.json
         token_count = json.loads(dbget("select token_status,count(*) from new.appointment where doctor_id='" + str(d['doctor_id']) + "'\
         and business_id = '" + str(d['business_id']) + "'\
-        and business_date = '" + str(d['business_date']) + "' group by token_status"))  
+        and business_date = '" + str(d['business_date']) + "' group by token_status"))
+        dic={}
+        for i in token_count:
+            dic[i['token_status']]=i['count']
+                    
         return (json.dumps({"Message": "Token_status Counted  Sucessfully", "Message_Code": "TCS", "Service_Status": "Success"
-                                , "token_status": token_count},indent=4))
+                                , "token count": dic},indent=4))
 
     except:
         return (json.dumps({"Message": "Token_status Counted UnSuccessful", "Message_Code": "TCUS", "Service_Status": "Failure"},indent=4))
@@ -80,7 +84,7 @@ def illness_report(request):
 def channel_report(request):
     try:
         d = request.json
-        channel_status = json.loads(dbget("select channel,count(*) from new.appointment where doctor_id='" + str(d['doctor_id']) + "'\
+        channel_status = json.loads(dbget("select channel as label,count(*) from new.appointment where doctor_id='" + str(d['doctor_id']) + "'\
         and business_id = '" + str(d['business_id']) + "' group by channel"))
        
         return (json.dumps({"Message": "illness Counted  Sucessfully", "Message_Code": "CCS", "Service_Status": "Success"
