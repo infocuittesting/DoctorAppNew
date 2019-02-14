@@ -66,7 +66,7 @@ def tokengeneration(request):
                         else:
                             avg_wait = (no - 1) * waittime
                         dbput("update new.token_no set token_no ='"+str(no)+"' where doctor_id='"+str(a['doctor_id'])+"' and business_id = '"+str(bus_id)+"'")
-                        return (json.dumps({'Message': 'Token Generated', 'Message_Code': 'TGS', 'Status': 'success', 'Token_No': no,'waiting_time':avg_wait,'appointment_id':appoint_id}, indent=4))
+                        return (json.dumps({'Message': 'Token Generated', 'Message_Code': 'TGS', 'Status': 'success', 'Token_No': no,'Waiting_Time':avg_wait,'Appointment_id':appoint_id}, indent=4))
 
                     else:
                         return (json.dumps({"Message": "Token should be Generated only for This Week ", "Message_Code": "TGTW","Service Status": "Failure"},
