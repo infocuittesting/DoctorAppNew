@@ -76,10 +76,13 @@ def myappointments(request):
         for i in output:
             if datetime.datetime.strptime(i['business_date'], '%Y-%m-%d').date()==today:
                 i['flag']='today'
+                i['image_url']=""
             elif datetime.datetime.strptime(i['business_date'], '%Y-%m-%d').date()<today:
                 i['flag']='past'
+                i['image_url']=""
             else:
                 i['flag']='future'
+                i['image_url']=""
         return(json.dumps({"Message":"Recored Selected Successfully","Message_Code":"RSS","Service":"Success","output":output},indent=4))
     except:
         return(json.dumps({"Message":"Record Selected UnSuccessfully","Message_Code":"RDUS","Service_Status":"UnSuccess"},indent=4)) 
