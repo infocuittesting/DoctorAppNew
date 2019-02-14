@@ -23,7 +23,7 @@ def tokengeneration(request):
             appid = json.loads(dbget("select app_id from new.appointment where mobile = '"+d['mobile']+"'\
                                        and doctor_id = '"+str(d['doctor_id'])+"' and business_id = '"+str(d['business_id'])+"'"))
             app_id = appid[0]['app_id']
-            return(json.dumps({'Message': 'Token Already Generated', 'Message_Code': 'TAG', 'Status': 'Sucess','Waiting Time':avg_wait,'Appointment id':app_id},indent=4))
+            return(json.dumps({'Message': 'Token Already Generated', 'Message_Code': 'TAG','Token_No':num, 'Status': 'Sucess','Waiting_Time':avg_wait,'Appointment_id':app_id},indent=4))
         else:                       
             doctorid = json.loads(dbget("select count(*) as doctor_id from new.doctor_profile where doctor_profile_id ='"+d['doctor_id']+"'"))
             mobile = json.loads(dbget("select count(*) as mobile from new.user_profile where mobile ='"+d['mobile']+"'"))
