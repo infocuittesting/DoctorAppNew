@@ -93,7 +93,7 @@ def selectappointment(request):
 def updatetoken(request):
     try:
         d = request.json
-        app_id = json.loads(dbget("select count(*) as appointment_id from new.appointment where appointment_id ='"+str(d['appointment_id'])+"'"))
+        app_id = json.loads(dbget("select count(*) as appointment_id from new.appointment where app_id ='"+str(d['appointment_id'])+"'"))
         if app_id[0]['appointment_id']==1:
                 dbput("update new.appointment set token_status='" + str(d['token_status']) + "'  where app_id='" + str(d['appointment_id']) + "'")
                 return (json.dumps({"Message": "Record Updated Successfully", "Message_Code": "RUS", "Service_Status": "Success"},indent=4))
