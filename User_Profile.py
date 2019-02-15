@@ -65,7 +65,7 @@ def myappointments(request):
         output = json.loads(dbget("select new.appointment.app_id, new.doctor_profile.doctor_name,new.business_profile.business_name,\
                                      new.business_profile.business_name,new.business_profile.business_type,new.business_profile.address,\
                                      new.business_profile.location_lat,new.business_profile.location_long,new.appointment.token_time,new.appointment.token_status,\
-                                    new.appointment.business_date,new.appointment.reason,new.appointment.token_no\
+                                    new.appointment.business_date,new.appointment.reason,new.appointment.token_no,new.appointment.doctor_id,new.appointment.business_id\
                                     from new.user_profile join new.appointment on new.user_profile.mobile=new.appointment.mobile \
                                     join new.business_profile on new.appointment.business_id=new.business_profile.business_id\
                                     join new.doctor_profile on new.appointment.doctor_id=new.doctor_profile.doctor_profile_id\
