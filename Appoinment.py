@@ -33,7 +33,7 @@ def tokengeneration(request):
                     currenttime = datetime.datetime.now()  # to get current datetime
                     todaydate = currenttime.date()
                     todaytime = currenttime.strftime('%H:%M')  # to get current time
-                    doc_id = {k: v for k, v in d.items() if k in ('doctr_id', 'business_id')}
+                    doc_id = {k: v for k, v in d.items() if k in ('doctor_id', 'business_id')}
                     docidval = doc_id.get("doctor_id")
                     bus_id = doc_id.get("business_id")
                     x = currenttime.strftime("%a")[:3].lower()
