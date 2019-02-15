@@ -101,7 +101,7 @@ def latlong_report(request):
 
         list1 = []
         for i in count:
-           list1.append({'name':i['name'],'lat_Lng':""+i['location_lat']+""+"|"+""+i['location_long']+""}) 
+           list1.append({'name':i['name'],'lat_Lng':[i['location_lat'],i['location_long']]}) 
         print(list1)    
             
             
