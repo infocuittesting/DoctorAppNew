@@ -23,7 +23,7 @@ def tokengeneration(request):
             appid = json.loads(dbget("select app_id from new.appointment where mobile = '"+d['mobile']+"'\
                                        and doctor_id = '"+str(d['doctor_id'])+"' and business_id = '"+str(d['business_id'])+"'"))
             app_id = appid[0]['app_id']
-            return(json.dumps({'Message': 'Token Already Generated', 'Message_Code': 'TAG','Token_No':num, 'Status': 'Sucess','Waiting_Time':avg_wait,'Appointment_id':app_id},indent=4))
+            return(json.dumps({'Message': 'Token Already Generated', 'Message_Code': 'TAG','Token_No':num,'Status': 'Sucess','Waiting_Time':avg_wait,'Appointment_id':app_id},indent=4))
         else:                       
             doctorid = json.loads(dbget("select count(*) as doctor_id from new.doctor_profile where doctor_profile_id ='"+d['doctor_id']+"'"))
             mobile = json.loads(dbget("select count(*) as mobile from new.user_profile where mobile ='"+d['mobile']+"'"))
@@ -33,7 +33,7 @@ def tokengeneration(request):
                     currenttime = datetime.datetime.now()  # to get current datetime
                     todaydate = currenttime.date()
                     todaytime = currenttime.strftime('%H:%M')  # to get current time
-                    doc_id = {k: v for k, v in d.items() if k in ('doctor_id', 'business_id')}
+                    doc_id = {k: v for k, v in d.items() if k in ('doctr_id', 'business_id')}
                     docidval = doc_id.get("doctor_id")
                     bus_id = doc_id.get("business_id")
                     x = currenttime.strftime("%a")[:3].lower()
@@ -69,7 +69,7 @@ def tokengeneration(request):
                         return (json.dumps({'Message': 'Token Generated', 'Message_Code': 'TGS', 'Status': 'success', 'Token_No': no,'Waiting_Time':avg_wait,'Appointment_id':appoint_id}, indent=4))
 
                     else:
-                        return (json.dumps({"Message": "Token should be Generated only for This Week ", "Message_Code": "TGTW","Service Status": "Failure"},
+                        return (json.dumps({"Message": "Token should be Generated only for This Week ", "Message_Code": "TGTW","Service_Status": "Failure"},
                                            indent=4))
             else:
                     return(json.dumps({'Message': 'Invalid Data', 'Message_Code': 'ID', 'Status': 'Failure'},indent=4))
@@ -194,6 +194,8 @@ def average_waiting_time(request):
               return(json.dumps({'Message': 'Invalid Data', 'Message_Code': 'ID', 'Status': 'Failure'},indent=4))
     except:
         return (json.dumps({"Message": "Average Waittime Calculated  Unsuccessful", "Message_Code": "AWCUS","Service_Status": "Failure"}, indent=4))
+
+
 
 
 
