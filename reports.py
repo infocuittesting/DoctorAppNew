@@ -95,14 +95,19 @@ def channel_report(request):
 def latlong_report(request):
     try:
         d = request.json
-        count = json.loads(dbget("select distinct new.user_profile.area,new.user_profile.location_lat,new.user_profile.location_long from new.appointment\
+        count = json.loads(dbget("select distinct new.user_profile.area as name,new.user_profile.location_lat,new.user_profile.location_long from new.appointment\
                                  join new.user_profile on new.appointment.mobile=new.user_profile.mobile\
                                      where doctor_id='"+d['doctor_id']+"' and business_id = '" + str(d['business_id'])+"'"))
+
         list1 = []
         for i in count:
            list1.append({'name':i['name'],'lat_Lng':""+i['location_lat']+""+"|"+""+i['location_long']+""}) 
-        print(list1)  
-        return (json.dumps({"Message": "Latlong Selected  Sucessfully","Message_Code": "LSS", "Service_Status": "Success","ReturnValue": list1},indent=4))
+        print(list1)    
+            
+            
+        return (json.dumps({"Message": "Latlong Selected  Sucessfully","Message_Code": "LSS", "Service_Status": "Success","ReturnValue":list1},indent=4))
     except:
         return (json.dumps({"Message": "latlong  Selected UnSuccessful", "Message_Code": "LSUS", "Service_Status": "Failure"},indent=4))
+        
+
         
