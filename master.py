@@ -68,6 +68,7 @@ from SendEmailAll import callFn
 from SendEmail import callfn
 #------------Send SMS------------------#
 from SendSMS import sendsms
+from SendSMS import Sendmessge
 #-----------select doc and bus all------
 from Select_BusinessAndDoctors import Select_BusinessandDoctors
 
@@ -294,6 +295,10 @@ def Sendemail():
 def Sendsms():
     return sendsms(request)
 
+@app.route('/SendMessge',methods=['GET','POST'])
+def sendmessge():
+    return Sendmessge(request)
+
 #-----------select doc and bus all------
 @app.route('/Select_BusinessandDoctors',methods=['POST'])
 def Select_BusinessDoctors():
@@ -305,5 +310,5 @@ def Select_BusinessDoctors():
 
 
 if __name__ == '__main__':
-   app.run(host="192.168.1.29",port=5000)
+   app.run(host="192.168.1.4",port=5000)
 
