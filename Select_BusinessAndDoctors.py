@@ -22,16 +22,20 @@ def Select_BusinessandDoctors(request):
       typeofspecialist = bus['specialist']
       index_no = specialist_type.index(typeofspecialist)
       try:
-         bus['cli_img'] = ""
-         bus.update({"cli_subimages1":"","cli_subimages2":"","cli_subimages3":""})
+         #image 
+         bus['cli_img'] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgVP5mZIHuzWfgDlzcJzDmNqpLl1ARDgnVA8OXgUszKk31sqTcXA"
+         #image
+         bus.update({"cli_subimages1":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF-K-m966PMU0Mn1Inf7OilRSfn6QDYUaiVCIvCGtMqrIUN0J5Ow","cli_subimages2":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu6K0HVZTagXvi3banJF6kFV0R1Z9jrie0UQk4dp7A88_dWtXv0A","cli_subimages3":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO7GQ74BRcJty89sPDhPwo1S_UyLFrVSMy9APw0sfZrUjdIRbJ"})
          bus['cli_feedback'] = json.loads(dbget("select count(*) from new.feedback where "
                                                 "business_id='"+str(bus['business_id'])+"'"))[0]['count']
          bus['cli_doc_count'] = json.loads(dbget("select count(*) from new.doctorinbusiness where "
                                                  "business_id='"+str(bus['business_id'])+"'"))[0]['count']
          specialist[index_no].append(bus)
       except:
-          bus['cli_img'] = ""
-          bus.update({"cli_subimages1": "", "cli_subimages2": "", "cli_subimages3": ""})
+          #image
+          bus['cli_img'] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgVP5mZIHuzWfgDlzcJzDmNqpLl1ARDgnVA8OXgUszKk31sqTcXA"
+          #image
+          bus.update({"cli_subimages1": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF-K-m966PMU0Mn1Inf7OilRSfn6QDYUaiVCIvCGtMqrIUN0J5Ow", "cli_subimages2": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu6K0HVZTagXvi3banJF6kFV0R1Z9jrie0UQk4dp7A88_dWtXv0A", "cli_subimages3": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO7GQ74BRcJty89sPDhPwo1S_UyLFrVSMy9APw0sfZrUjdIRbJ"})
           bus['cli_feedback'] = json.loads(dbget("select count(*) from new.feedback where "
                                                  "business_id='"+str(bus['business_id'])+"'"))[0]['count']
           bus['cli_doc_count'] = json.loads(dbget("select count(*) from new.doctorinbusiness "
@@ -59,7 +63,8 @@ def Select_BusinessandDoctors(request):
                                          'timing':""+datetime.strptime(t['start_timing'], "%H:%M").strftime("%I:%M %p")+"-"
                                                 ""+datetime.strptime(t['start_timing'], "%H:%M").strftime("%I:%M %p")+""}
                                                 #,'evening':''}
-          new_dict['clinic_images'] = [{"img":""},{"img":""},{"img":""}]
+          #image    
+          new_dict['clinic_images'] = [{"img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBJm3R3lzyCGykNGsJQgOel1pu7JIAGW4Lga8Edt_24ONfXa2r"},{"img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQae0MXFfNe1aL7oCl-yEtW1Mat_cxE7fIvv6qsDvmv5SK-HWd6Qg"},{"img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTprOKWBWD4SOvmvaz7C7lGLdHm1Kr8NKPLluV3NQEeYSq19zwP"}]
           new_dict['clinic_timings'] = timing
           doctorinbusiness = json.loads(dbget("select * from new.doctor_profile where "
                                               "doctor_profile_id in (select doctor_id from "
@@ -67,7 +72,8 @@ def Select_BusinessandDoctors(request):
 
           # Doctor details inside the business details
           for docinbus in doctorinbusiness:
-              docinbus['doc_img'] = ""
+              #image
+              docinbus['doc_img'] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSa_RWfFQvBdKuh09_xc1FIiINdbaevnMgECXuPTliIOXKcdLc3lw"
               docinbus['doc_available_date'] = "Fri,13 Dec"
               docinbus['doc_available_location'] = ""
               docinbus['doc_hospital'] = ""
@@ -103,7 +109,8 @@ def Select_BusinessandDoctors(request):
               for fe in docinbus['doctor_details'][0]['doctor_feedback']:
                   fe['visited'] = '1 month ago'
 
-              docinbus['doctor_details'][0]['doctor_clinic_img'] = [{"img":""},{"img":""},{"img":""}]
+              #image 
+              docinbus['doctor_details'][0]['doctor_clinic_img'] = [{"img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNBmYOXOSuTes0Xpc7GPICQeg4KijVB5JzhA9Xay68lk9gs96cnw"},{"img":"http://www.chapelhillfamilydoctors.com.au/images/doctor-img2.png"},{"img":"http://healthstaff.co.za/wp-content/uploads/2017/07/doctor.png"}]
               docinbus['doctor_details'][0]['doctor_specialization'] = json.loads(dbget("SELECT new.specialization.* "
                                                                                         " FROM new.doctor_profile join new.doctor_specialization on"
                                                                                         " doctor_profile.doctor_profile_id = doctor_specialization.doctor_id"
