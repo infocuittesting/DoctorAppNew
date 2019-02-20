@@ -5,7 +5,7 @@ from flask import Flask,request,jsonify
 
 
 def Insert_Timing(request):
-    # try:
+     try:
           timing=request.json
           doc_timing = { k : v for k,v in timing.items() if k in ('doctor_id','business_id')}
           if doc_timing['doctor_id'] != 0:
@@ -37,15 +37,17 @@ def Insert_Timing(request):
                     i['session'] = day['session']
                     gensql('insert','new.timing',i)
                return(json.dumps({"Message":"Record Inserted Successfully","Message_Code":"RIS","Service_Status":"Success"},indent=4))
-    # except:
-     #     return(json.dumps({"Message":"Record Inserted UnSuccessfully","MessageCode":"RIUS","Service":"UnSuccess"},indent=4))  
+     except:
+          return(json.dumps({"Message":"Record Inserted UnSuccessfully","MessageCode":"RIUS","Service":"UnSuccess"},indent=4))  
 def Select_Timing(request):
     try:
         d = request.json
         if d['doctor_id'] != 0:
              doctor = json.loads(dbget("select count(*) as doc_id from new.doctor_profile where doctor_profile_id ='"+d['doctor_id']+"'"))
+             print(doctor)
              business = json.loads(dbget("select count(*) as bus_id from new.business_profile where business_id ='"+str(d['business_id'])+"'"))
-             if doctorid[0]['doctor_id'] == 1 and businessid[0]['business_id'] == 1:
+             
+             if doctor[0]['doc_id'] == 1 and business[0]['bus_id'] == 1:
                   output=json.loads(gensql('select','new.timing','*',d))
                   return(json.dumps({"Message":"Record Selected Successfully","Message_Code":"RSS","Service_Status":"Success","output":output},indent=4))
              else:
