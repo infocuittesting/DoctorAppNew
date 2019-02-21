@@ -41,6 +41,7 @@ from doctorprofile import update_doctorprofile
 from doctorprofile import update_businessanddoctors
 from doctorprofile import updatedocspecialization
 from doctorprofile import updatedocservices
+from doctorprofile import selectdoctorprofile
 #---------country--------#
 from country import Insert_Country
 from country import Select_Country
@@ -222,6 +223,9 @@ def Update_Doc_Specialization():
 @app.route('/Update_Doc_Services',methods=['post'])
 def Update_Doc_Services():
     return updatedocservices(request)
+@app.route('/selectdoctorprofile',methods=['post'])
+def Select_doctor_profile():
+    return selectdoctorprofile(request)
 #-------------------country------------------#
 
 @app.route('/Insert_Country',methods=['post'])
