@@ -129,3 +129,17 @@ def updatedocservices(request):
         return(json.dumps({"Message":"Record Updated Successfully","Message_Code":"RUS","Service_Status":"Success"},indent=4))
     except:
         return(json.dumps({"Message":"Record Updated Unsuccessful","Message_Code":"RUUS","Service_Status":"Success"},indent=4))
+def selectdoctorprofile(request):
+    d = request.json
+        
+    doctor = json.loads(dbget("select count(*) as doc_id from new.doctor_profile where doctor_profile_id ='"+d['doctor_id']+"'"))
+    print(doctor)
+    business = json.loads(dbget("select count(*) as bus_id from new.business_profile where business_id ='"+str(d['business_id'])+"'"))
+             
+    if doctor[0]['doc_id'] == 1 and business[0]['bus_id'] == 1:
+        output=json.loads(dbget("select new.timing.start_timing,new.timing.end_timing,new.DoctorInBusiness.average_waiting_time,new.doctor_profile.* from new.timing\
+                                join new.DoctorInBusiness on new.timing.doctor_id=new.DoctorInBusiness.doctor_id\
+                                join new.doctor_profile on new.doctor_profile.doctor_profile_id = new.timing.doctor_id"))
+        return(json.dumps({"Message":"Record Selected Successfully","Message_Code":"RSS","Service_Status":"Success","output":output},indent=4))
+    
+    
