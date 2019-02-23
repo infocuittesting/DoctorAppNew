@@ -150,11 +150,12 @@ def bookings(request):
         d = request.json
         doctorid = json.loads(dbget("select count(*) as doctor_id from new.doctor_profile where doctor_profile_id ='"+d['doctor_id']+"'"))
         businessid = json.loads(dbget("select count(*) as business_id from new.business_profile where business_id ='"+str(d['business_id'])+"'"))
+        date1=datetime.date.today()
         if doctorid[0]['doctor_id'] == 1 and businessid[0]['business_id'] == 1:
             output = json.loads(dbget("select new.appointment.*,new.user_profile.* from new.appointment \
                                 join new.user_profile on new.appointment.mobile = new.user_profile.mobile \
                                 where token_status in ('Booked')\
-                                and doctor_id='" + str(d['doctor_id']) + "' and business_date ='"+str(date1)+"' order by token_no desc limit 5  "))
+                                and doctor_id='" + str(d['doctor_id']) + "' and business_date ='"+str(date1)+"' and business_id = '"+str(d['business_id'])+"' order by token_no desc limit 5  "))
             print(output,type(output))
             for i in output:
                 print(i,type(i))
@@ -165,6 +166,8 @@ def bookings(request):
               return(json.dumps({'Message': 'Invalid Data', 'Message_Code': 'ID', 'Status': 'Failure'},indent=4))
     except:
        return (json.dumps({"Message": "Bookings Unsuccessful", "Message_Code": "BUS", "Service_Status": "Failure"},indent=4))
+    
+
     
     
     
