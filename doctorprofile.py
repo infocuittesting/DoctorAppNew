@@ -137,9 +137,9 @@ def selectdoctorprofile(request):
     business = json.loads(dbget("select count(*) as bus_id from new.business_profile where business_id ='"+str(d['business_id'])+"'"))
              
     if doctor[0]['doc_id'] == 1 and business[0]['bus_id'] == 1:
-        output=json.loads(dbget("select new.timing.start_timing,new.timing.end_timing,new.DoctorInBusiness.average_waiting_time,new.doctor_profile.* from new.timing\
-                                join new.DoctorInBusiness on new.timing.doctor_id=new.DoctorInBusiness.doctor_id\
-                                join new.doctor_profile on new.doctor_profile.doctor_profile_id = new.timing.doctor_id"))
+        output=json.loads(dbget("select new.doctor_profile.*,new.doctorinbusiness.average_waiting_time from new.doctor_profile join new.doctorinbusiness on new.doctor_profile.doctor_profile_id=new.doctorinbusiness.doctor_id\
+                                where doctor_profile_id='"+str(d['doctor_id'])+"'" ))
+        output[0]['timing'] = json.loads(dbget("select new.timing.start_timing,new.timing.end_timing,new.timing.day,new.timing.session  from new.timing where doctor_id='"+d['doctor_id']+"'"))
         return(json.dumps({"Message":"Record Selected Successfully","Message_Code":"RSS","Service_Status":"Success","output":output},indent=4))
-    
+
     
