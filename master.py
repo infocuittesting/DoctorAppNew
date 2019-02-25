@@ -67,6 +67,7 @@ from reports import latlong_report
 #---------------Send Email----------------#
 from SendEmailAll import callFn
 from SendEmail import callfn
+from gupshupemail import gupshup
 #------------Send SMS------------------#
 from SendSMS import sendsms
 from SendSMS import Sendmessge
@@ -292,6 +293,11 @@ def Sendemailall():
 @app.route('/SendEmail',methods=['post'])
 def Sendemail():
     return callfn(request)
+@app.route('/gupshupEmail',methods=['GET'])
+def gupshupemail():
+    return gupshup(request)
+
+
 
 
 #-------------------Send SMS------------------#
@@ -314,5 +320,7 @@ def Select_BusinessDoctors():
 
 
 if __name__ == '__main__':
-   app.run(host="192.168.1.4",port=5000)
+   app.run(host="192.168.1.5",port=5000)
+
+
 
