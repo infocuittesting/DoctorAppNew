@@ -137,9 +137,20 @@ def selectdoctorprofile(request):
     business = json.loads(dbget("select count(*) as bus_id from new.business_profile where business_id ='"+str(d['business_id'])+"'"))
              
     if doctor[0]['doc_id'] == 1 and business[0]['bus_id'] == 1:
-        output=json.loads(dbget("select new.doctor_profile.*,new.doctorinbusiness.average_waiting_time from new.doctor_profile join new.doctorinbusiness on new.doctor_profile.doctor_profile_id=new.doctorinbusiness.doctor_id\
+        output=json.loads(dbget("select new.doctor_profile.*,new.doctorinbusiness.average_waiting_time \
+                                 from new.doctor_profile join new.doctorinbusiness on new.doctor_profile.\
+                                 doctor_profile_id=new.doctorinbusiness.doctor_id\
                                 where doctor_profile_id='"+str(d['doctor_id'])+"'" ))
-        output[0]['timing'] = json.loads(dbget("select new.timing.start_timing,new.timing.end_timing,new.timing.day,new.timing.session  from new.timing where doctor_id='"+d['doctor_id']+"'"))
-        return(json.dumps({"Message":"Record Selected Successfully","Message_Code":"RSS","Service_Status":"Success","output":output},indent=4))
+        output[0]['timing'] = json.loads(dbget("select new.timing.start_timing,new.timing.end_timing,new.timing.day,new.timing.session  \
+                                                from new.timing where doctor_id='"+d['doctor_id']+"'"))
+                                  
+        
+        output[0]['specialization']=json.loads(dbget("select new.doctor_specialization.specialization_id,new.specialization.\
+                                                     specialization_name from new.doctor_specialization join new.specialization on \
+                                                     doctor_specialization.specialization_id=new.specialization.specialization_id where doctor_id='"+d['doctor_id']+"'"))
 
+        output[0]['services']=json.loads(dbget("select new.doctor_services.service_id,new.services.\
+                                                     service_name from new.doctor_services join new.services on \
+                                                     doctor_services.service_id=new.services.service_id where doctor_id='"+d['doctor_id']+"'"))
+        return(json.dumps({"Message":"Record Selected Successfully","Message_Code":"RSS","Service_Status":"Success","output":output},indent=4))
     
