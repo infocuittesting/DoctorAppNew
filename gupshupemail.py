@@ -37,20 +37,22 @@ def gupshup(request):
       <body>
         <dl>
         <dt>
-        <p><font size="2" color="blue">hi,"""+name+"""</font></p>
+        <p><font size="2" color="blue">Hi,"""+name+"""</font></p>
         <p><font size="2" color="black">"""+message+"""</font></p>
-  
-        <p><font size="2" color="black">mobile Number:"""+ phone+"""</font></p>
-        <p><font size="2" color="black">Arrival Date:"""+ arrival+"""</font></p>
-        <p><font size="2" color="black">Depature Date:"""+ depature+"""</font></p>
-        <p><font size="2" color="black">Room Type:"""+ room_type+"""</font></p>
-        <p><font size="4" color="black">no_of_nights: """+no_of_nights+"""</font></p>
         <p><font size="2" color="black">Country code:"""+code+"""</font></p>
-        <p><font size="2" color="black">Amount:"""+amount+"""</font></p>
-        <p><font size="2" color="black">adult:"""+ adult+"""</font></p>
-        <p><font size="2" color="black">child:"""+child+"""</font></p>
-        <p><font size="4" color="black">rooms:"""+rooms+"""</font></p>
+        <p><font size="2" color="black">Customer mobile Number:"""+ phone+"""</font></p>
+        <p><font size="2" color="black">Customer Arrival Date:"""+ arrival+"""</font></p>
+        <p><font size="2" color="black">Customer Depature Date:"""+ depature+"""</font></p>
+        <p><font size="2" color="black">Customer Adult:"""+ adult+"""</font></p>
+        <p><font size="2" color="black">Customer Child:"""+child+"""</font></p>
+        <p><font size="2" color="black">Customer Room Type:"""+ room_type+"""</font></p>
+        <p><font size="2" color="black">number of Nights: """+no_of_nights+"""</font></p>
+        <p><font size="4" color="black">Customer Rooms:"""+rooms+"""</font></p>
         <p><font size="2" color="black">pickupdrop:"""+ pickupdrop+"""</font></p>
+        <p><font size="2" color="black">Rate Per Day:"""+amount+"""</font></p>
+       
+        
+        
       
         
         </dl>
