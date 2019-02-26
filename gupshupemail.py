@@ -62,7 +62,7 @@ def gupshup(request):
         <p><font size="2" color="black">"""+Booking_details+"""</font></p>
         <p><font size="2" color="blue">Hi,"""+name+"""</font></p>
         <p><font size="2" color="black">"""+message+"""</font></p>
-        <p><font size="2" color="black">code:"""+code+"""</font></p>
+        <p><font size="2" color="black">country code:"""+code+"""</font></p>
         <p><font size="2" color="black">mobile Number:"""+phone+"""</font></p>
         <p><font size="2" color="black">Arrival Date:"""+arrival+"""</font></p>
         <p><font size="2" color="black">Depature Date:"""+depature+"""</font></p>
