@@ -37,7 +37,7 @@ def gupshup(request):
       <body>
         <dl>
         <dt>
-        <p><font size="2" color="blue">Hi,"""+name+"""</font></p>
+        <p><font size="4" color="blue">Hi,"""+name+"""</font></p>
         <p><font size="2" color="black">"""+message+"""</font></p>
         <p><font size="2" color="black">Country code:"""+code+"""</font></p>
         <p><font size="2" color="black">Customer mobile Number:"""+ phone+"""</font></p>
@@ -47,7 +47,7 @@ def gupshup(request):
         <p><font size="2" color="black">Customer Child:"""+child+"""</font></p>
         <p><font size="2" color="black">Customer Room Type:"""+ room_type+"""</font></p>
         <p><font size="2" color="black">number of Nights: """+no_of_nights+"""</font></p>
-        <p><font size="4" color="black">Customer Rooms:"""+rooms+"""</font></p>
+        <p><font size="2" color="black">Customer Rooms:"""+rooms+"""</font></p>
         <p><font size="2" color="black">pickupdrop:"""+ pickupdrop+"""</font></p>
         <p><font size="2" color="black">Rate Per Day:"""+amount+"""</font></p>
        
