@@ -73,9 +73,9 @@ def gupshup(request):
         <p><font size="2" color="black">Rooms:"""+rooms+"""</font></p>
         <p><font size="2" color="black">pickupdrop:"""+pickupdrop+"""</font></p>
         
-        <pre>
+       
         <font size="4" color="black">With best regards / Yours sincerely,</font>
-        <font size="4" color="black">Hotel Manager</font></pre>
+        <font size="4" color="black">Hotel Manager</font>
 
         </dl>
         </body>
