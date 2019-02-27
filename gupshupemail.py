@@ -61,16 +61,16 @@ def gupshup(request):
  
         <p><font size="2" color="black">"""+Booking_details+"""</font></p>
         <p><font size="2" color="black">"""+message+"""</font></p>
-        <p><font size="2" color="black">country code:"""+code+"""</font></p>
-        <p><font size="2" color="black">mobile Number:"""+phone+"""</font></p>
+        <p><font size="2" color="black">Country Code:"""+code+"""</font></p>
+        <p><font size="2" color="black">Mobile Number:"""+phone+"""</font></p>
         <p><font size="2" color="black">Arrival Date:"""+arrival+"""</font></p>
         <p><font size="2" color="black">Depature Date:"""+depature+"""</font></p>
         <p><font size="2" color="black">Adult:"""+adult+"""</font></p>
         <p><font size="2" color="black">Child:"""+child+"""</font></p>
         <p><font size="2" color="black">Room Type:"""+room_type+"""</font></p>
-        <p><font size="2" color="black">number of Nights: """+no_of_nights+"""</font></p>
+        <p><font size="2" color="black">Number of Nights: """+no_of_nights+"""</font></p>
         <p><font size="2" color="black">Rooms:"""+rooms+"""</font></p>
-        <p><font size="2" color="black">pickupdrop:"""+pickupdrop+"""</font></p>
+        <p><font size="2" color="black">Pickupdrop:"""+pickupdrop+"""</font></p>
         
        
         <font size="4" color="black">With best regards / Yours sincerely,</font>
