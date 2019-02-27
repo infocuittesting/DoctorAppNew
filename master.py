@@ -73,6 +73,12 @@ from SendSMS import sendsms
 from SendSMS import Sendmessge
 #-----------select doc and bus all------
 from Select_BusinessAndDoctors import Select_BusinessandDoctors
+#----------------doctor_login-----------------#
+from doctor_login import Insert_Doctor_Login
+from doctor_login import Select_Doctor_Login
+from doctor_login import Update_Doctor_Login
+
+
 
 
 from flask_cors import CORS
@@ -313,6 +319,18 @@ def sendmessge():
 @app.route('/Select_BusinessandDoctors',methods=['POST'])
 def Select_BusinessDoctors():
     return Select_BusinessandDoctors(request)
+
+
+#------------------doctor_login-----------#
+@app.route('/insert_doctor_login',methods=['POST'])
+def insertdoctorlogin():
+    return Insert_Doctor_Login(request)
+@app.route('/select_doctor_login',methods=['POST'])
+def selectdoctorlogin():
+    return Select_Doctor_Login(request)
+@app.route('/update_doctor_login',methods=['POST'])
+def updatedoctorlogin():
+    return Update_Doctor_Login(request)
 
 
 
