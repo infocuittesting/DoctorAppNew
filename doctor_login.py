@@ -4,7 +4,7 @@ import datetime
 from flask import Flask,request,jsonify
 
 def Insert_Doctor_Login(request):
-  try:
+   try:
         d=request.json
         print(d)
         datetime1=datetime.datetime.now()
@@ -24,10 +24,16 @@ def Insert_Doctor_Login(request):
            gensql('insert','new.doctor_login',d)
            return(json.dumps({"Message":"Record Updated  Successfully","Message_Code":"RUS","Service_Status":"Success"},indent=4))
         else:
-           return(json.dumps({"Message":"Invalid_Data","Message_Code":"ID","Service_Status":"UnSuccess"},indent=4)
+           return(json.dumps({"Message":"Invalid_Data","Message_Code":"ID","Service_Status":"UnSuccess"},indent=4))
+        
+           
+        
+           
+           #gensql('insert','new.doctor_login',d)
         
    except:
         return(json.dumps({"Message":"Record Inserted UnSuccessfull","Message_Code":"RIUS","Service_Status":"Failure"},indent=4))
+
 def Select_Doctor_Login(request):
     try:
         d=request.json
