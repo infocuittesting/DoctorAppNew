@@ -4,33 +4,30 @@ import datetime
 from flask import Flask,request,jsonify
 
 def Insert_Doctor_Login(request):
-   try:
+  try:
         d=request.json
         print(d)
         datetime1=datetime.datetime.now()
         print(datetime1)
         d['date_time'] = datetime1
-        '''
+        
         doctorid = json.loads(dbget("select count(*) as doctor_id from new.doctorinbusiness where doctor_id ='"+d['doctor_id']+"'"))
         print( doctorid)
         businessid = json.loads(dbget("select count(*) as business_id from new.doctorinbusiness where business_id ='"+str(d['business_id'])+"'"))
         print(businessid)
         if doctorid[0]['doctor_id']==1 and businessid[0]['business_id']!=1:
            print("hai")
-        '''   
-        dbput("update new.doctorinbusiness set login_status='" + str(d['login_status']) + "' \
+           
+           dbput("update new.doctorinbusiness set login_status='" + str(d['login_status']) + "' \
                    where doctor_id='" +d['doctor_id']+"' and business_id='"+str(d['business_id'])+"'")
 
-        gensql('insert','new.doctor_login',d)
+           gensql('insert','new.doctor_login',d)
+           return(json.dumps({"Message":"Record Updated  Successfully","Message_Code":"RUS","Service_Status":"Success"},indent=4))
+        else:
+           return(json.dumps({"Message":"Invalid_Data","Message_Code":"ID","Service_Status":"UnSuccess"},indent=4)
         
-           
-        
-           
-           #gensql('insert','new.doctor_login',d)
-        return(json.dumps({"Message":"Record Updated  Successfully","Message_Code":"RUS","Service_Status":"Success"},indent=4))
    except:
         return(json.dumps({"Message":"Record Inserted UnSuccessfull","Message_Code":"RIUS","Service_Status":"Failure"},indent=4))
-
 def Select_Doctor_Login(request):
     try:
         d=request.json
