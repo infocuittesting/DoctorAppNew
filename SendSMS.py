@@ -76,5 +76,5 @@ def Sendmessge(request):
             the_page = the_page[1:]
             print(the_page)
             the_page = str(the_page)
-         return(json.dumps({"Message":"SMS Sent Sucessfully","Key":the_page},indent =2))
+         return(json.dumps({"Message":"SMS Sent Sucessfully","Message_Code":"SSS","Key":the_page},indent =3))
         #return("hi")    
