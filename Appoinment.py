@@ -6,7 +6,7 @@ from datetime import timedelta
 from time import mktime
 from flask import Flask, request, jsonify
 def tokengeneration(request):
-    try:
+    #try:
         d = request.json
         mob = json.loads(dbget("select count(*) as mobile from new.appointment where mobile ='"+d['mobile']+"'\
                                 and business_date = '"+str(d['business_date'])+"' and doctor_id ='"+str(d['doctor_id'])+"'"))
@@ -50,7 +50,7 @@ def tokengeneration(request):
                     future = todaydate+timedelta(days=6)
                     if dt <= future and etime >todaytime:
                         a = {k: v for k, v in d.items() if k in ('doctor_id', 'business_id', 'business_date')}
-                        
+                        print('aaaaa',a)
                         res = json.loads(gensql('select', 'new.token_no', 'count(*)', a))
                         if res[0]['count'] == 0:
                             a['token_no'] = 0
@@ -77,13 +77,13 @@ def tokengeneration(request):
                         return (json.dumps({'Message': 'Token Generated', 'Message_Code': 'TGS', 'Status': 'success', 'Token_No': no,'Waiting_Time':avg_wait,'Appointment_id':appoint_id}, indent=4))
 
                     else:
-                        return (json.dumps({"Message": "Book Time Is Closed  ", "Message_Code": "BTIC","Service_Status": "Failure"},
+                        return (json.dumps({"Message": "Booking Time Closed ", "Message_Code": "TGTW","Service_Status": "Failure"},
                                            indent=4))
             else:
                     return(json.dumps({'Message': 'Invalid Data', 'Message_Code': 'ID', 'Status': 'Failure'},indent=4))
     
-    except:
-        return (json.dumps({"Message": "Token Generation UnSuccessful", "Message_Code": "TGUS", "Service_Status": "Failure"},indent=4))
+    #except:
+        #return (json.dumps({"Message": "Token Generation UnSuccessful", "Message_Code": "TGUS", "Service_Status": "Failure"},indent=4))
 
 
 def selectappointment(request):
@@ -133,7 +133,7 @@ def count(request):
 
 
 def livefeed(request):
-    try:
+    #try:
         d = request.json
         
         doctorid = json.loads(dbget("select count(*) as doctor_id from new.doctor_profile where doctor_profile_id ='"+d['doctor_id']+"'"))
@@ -150,8 +150,8 @@ def livefeed(request):
             return (json.dumps({"message": "livefeed Successful", "Message_Code": "LS",'Status': 'Sucess', "output": output},indent=4))
         else:
               return(json.dumps({'Message': 'Invalid Data', 'Message_Code': 'ID', 'Status': 'Failure'},indent=4))
-    except:
-       return (json.dumps({"Message": "Livefeed Unsuccessful", "Message_Code": "LUS", "Service_Status": "Failure"},indent=4))
+    #except:
+      # return (json.dumps({"Message": "Livefeed Unsuccessful", "Message_Code": "LUS", "Service_Status": "Failure"},indent=4))
 
 def bookings(request):
     try:
