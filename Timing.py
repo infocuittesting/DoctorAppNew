@@ -72,7 +72,7 @@ def Update_Timing(request):
                          doc_timing['day'] = day['day']
                          i['start_timing'] = day['start_timing']
                          i['end_timing'] = day['end_timing']
-                         i['session'] = day['session']
+                         doc_timing['session'] = day['session']
                          gensql('update','new.timing',i,doc_timing)
                     return(json.dumps({"Message":"Record Updated Successfully","Message_Code":"RUS","Service_Status":"Success"},indent=4))
                else:
@@ -84,7 +84,7 @@ def Update_Timing(request):
                          doc_timing['day'] = day['day']
                          i['start_timing'] = day['start_timing']
                          i['end_timing'] = day['end_timing']
-                         i['session'] = day['session']
+                         doc_timing['session'] = day['session']
                          gensql('update','new.timing',i,doc_timing)
                return(json.dumps({"Message":"Record Updated Successfully","Message_Code":"RUS","Service_Status":"Success"},indent=4))
      except:
