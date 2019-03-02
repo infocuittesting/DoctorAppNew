@@ -12,15 +12,42 @@ def Select_BusinessandDoctors(request):
     business = json.loads(dbget("SELECT * FROM new.business_profile where country='"+d['country']+"'"
                                 " and city='"+d['city']+"' "))
     #print(business)
-    specialist_type = list(set(bus['specialist'] for bus in business))
-    print(specialist_type)
+    specialist_type = sorted(list(set(bus['specialist'].title() for bus in business)))
+    print("specialist_type" ,specialist_type)
     specialist = []
     doc_only_specialist = {}
     #This loop segregate business based on specialist
+    new_specialist = []
     for bus in business:
       #print(bus)
-      typeofspecialist = bus['specialist']
-      index_no = specialist_type.index(typeofspecialist)
+      if bus['specialist'].title() not in new_specialist:
+          new_specialist.append(bus['specialist'].title())
+
+          #image
+          bus['cli_img'] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgVP5mZIHuzWfgDlzcJzDmNqpLl1ARDgnVA8OXgUszKk31sqTcXA"
+          #image
+          bus.update({"cli_subimages1": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF-K-m966PMU0Mn1Inf7OilRSfn6QDYUaiVCIvCGtMqrIUN0J5Ow", "cli_subimages2": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu6K0HVZTagXvi3banJF6kFV0R1Z9jrie0UQk4dp7A88_dWtXv0A", "cli_subimages3": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO7GQ74BRcJty89sPDhPwo1S_UyLFrVSMy9APw0sfZrUjdIRbJ"})
+          bus['cli_feedback'] = json.loads(dbget("select count(*) from new.feedback where "
+                                                 "business_id='"+str(bus['business_id'])+"'"))[0]['count']
+          bus['cli_doc_count'] = json.loads(dbget("select count(*) from new.doctorinbusiness "
+                                                  "where business_id='"+str(bus['business_id'])+ "'"))[0]['count']
+          specialist.append([bus])
+      else:
+
+          typeofspecialist = bus['specialist'].title()
+          index_no = new_specialist.index(typeofspecialist)
+
+          bus['cli_img'] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgVP5mZIHuzWfgDlzcJzDmNqpLl1ARDgnVA8OXgUszKk31sqTcXA"
+          # image
+          bus.update({   "cli_subimages1": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF-K-m966PMU0Mn1Inf7OilRSfn6QDYUaiVCIvCGtMqrIUN0J5Ow",
+                         "cli_subimages2": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu6K0HVZTagXvi3banJF6kFV0R1Z9jrie0UQk4dp7A88_dWtXv0A",
+                         "cli_subimages3": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO7GQ74BRcJty89sPDhPwo1S_UyLFrVSMy9APw0sfZrUjdIRbJ"})
+          bus['cli_feedback'] = json.loads(dbget("select count(*) from new.feedback where "
+                                                 "business_id='" + str(bus['business_id']) + "'"))[0]['count']
+          bus['cli_doc_count'] = json.loads(dbget("select count(*) from new.doctorinbusiness where "
+                                                  "business_id='" + str(bus['business_id']) + "'"))[0]['count']
+          specialist[index_no].append(bus)
+      '''
       try:
          #image 
          bus['cli_img'] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgVP5mZIHuzWfgDlzcJzDmNqpLl1ARDgnVA8OXgUszKk31sqTcXA"
@@ -32,17 +59,13 @@ def Select_BusinessandDoctors(request):
                                                  "business_id='"+str(bus['business_id'])+"'"))[0]['count']
          specialist[index_no].append(bus)
       except:
-          #image
-          bus['cli_img'] = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgVP5mZIHuzWfgDlzcJzDmNqpLl1ARDgnVA8OXgUszKk31sqTcXA"
-          #image
-          bus.update({"cli_subimages1": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF-K-m966PMU0Mn1Inf7OilRSfn6QDYUaiVCIvCGtMqrIUN0J5Ow", "cli_subimages2": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu6K0HVZTagXvi3banJF6kFV0R1Z9jrie0UQk4dp7A88_dWtXv0A", "cli_subimages3": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO7GQ74BRcJty89sPDhPwo1S_UyLFrVSMy9APw0sfZrUjdIRbJ"})
-          bus['cli_feedback'] = json.loads(dbget("select count(*) from new.feedback where "
-                                                 "business_id='"+str(bus['business_id'])+"'"))[0]['count']
-          bus['cli_doc_count'] = json.loads(dbget("select count(*) from new.doctorinbusiness "
-                                                  "where business_id='"+str(bus['business_id'])+ "'"))[0]['count']
-          specialist.append([bus])
 
-    #print("sp",specialist)
+      '''
+      #print("sp",specialist)
+
+
+    #print("specialist", specialist)
+
     # Main  loop
     for i in specialist:
         #print("listofspecial",i)
@@ -169,6 +192,7 @@ def Select_BusinessandDoctors(request):
     full_time = ed_time - st_time
     #print("spcialist", specialist)
     print("Time Taken",full_time)
+    
     return (json.dumps(
         {"Message": "Records Selected Sucessfully", "MessageCode": "RSS",
          "Service Status": "Success","specialist":specialist}, indent=4))
