@@ -307,7 +307,7 @@ def gupshupemail():
 
 
 #-------------------Send SMS------------------#
-@app.route('/SendSMS',methods=['GET'])
+@app.route('/SendSMS',methods=['GET','POST'])
 def Sendsms():
     return sendsms(request)
 
