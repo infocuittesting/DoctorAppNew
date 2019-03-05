@@ -61,12 +61,12 @@ def Sendmessge(request):
                 
                  mobile = request.json['mobile']
                  message = request.json['message']
-                 code =  request.json['code']
+                 code =  request.json['code'][1:]
                  print(mobile, message, code)
          else:
                 mobile = request.args['mobile']
                 message = request.args['message']
-                code =  request.args['code']
+                code =  request.args['code'][1:]
                 print(mobile, message, code)
                 
          url = "https://control.msg91.com/api/sendhttp.php?authkey=195833ANU0xiap5a708d1f&mobiles="+mobile+"&message="+message+"&sender=Infoit&route=4&country="+code+""
