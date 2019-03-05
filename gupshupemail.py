@@ -42,38 +42,35 @@ def gupshup(request):
         <meta charset="utf-8">
         </head>
         <body>
-        <dl>
-        <dt>
-        <pre>
-        <font size="4" color="black">"""+Hotel_Name+""",</font>
-        <font size="4" color="black">"""+Hotel_Address+""",</font>
-        <font size="4" color="black">"""+Hotel_Mobile_Number+""",</font>
-        <font size="4" color="black">"""+Hotel_email+""",</font>
-        
-        <font size="4" color="black">Dear """+name+""",</font>
-        <font size="4" color="black">      We are delighted that you have selected our """+Hotel_Name+""" On behalf of the entire team at the
-      """+Hotel_Name+""",extend you a very welcome and trust stay with us will be both enjoyable and comfortable
-      """+Hotel_Name+""" offers a selection of business services and facilities.which are detailed in the booklet,
-      placed on the writing table in your room.Should you require any assistance or have any specific
-      requirements,please do not hesitate to contact me extension(999).</font>
+        <dl><pre>
+        <font size="3" color="black">"""+Hotel_Name+""",</font>
+        <font size="3" color="black">"""+Hotel_Address+""",</font>
+        <font size="3" color="black">"""+Hotel_Mobile_Number+""",</font>
+        <font size="3" color="black">"""+Hotel_email+""",</font>
         </pre>
- 
-        <font size="2" color="black">"""+Booking_details+"""</font>
-        <font size="2" color="black">"""+message+"""</font>
-        <p><font size="2" color="black">Mobile Number:"""+phone+"""</font></p>
-        <p><font size="2" color="black">Arrival Date:"""+arrival+"""</font></p>
-        <p><font size="2" color="black">Depature Date:"""+depature+"""</font></p>
-        <p><font size="2" color="black">Adult:"""+adult+"""</font></p>
-        <p><font size="2" color="black">Child:"""+child+"""</font></p>
-        <p><font size="2" color="black">Room Type:"""+room_type+"""</font></p>
-        <p><font size="2" color="black">Number of Nights: """+no_of_nights+"""</font></p>
-        <p><font size="2" color="black">Rooms:"""+rooms+"""</font></p>
-        <p><font size="2" color="black">Pickupdrop:"""+pickupdrop+"""</font></p>
-        
-       
-        <font size="4" color="black">With best regards / Yours sincerely,</font>
-        <font size="4" color="black">Hotel Manager</font>
-
+        <font size="3" color="black">Dear """+name+""",</font>
+         <dd><p><font size="2" color="black">We are delighted that you have selected our """+Hotel_Name+""" On behalf of the entire team at the
+         """+Hotel_Name+""",extend you a very welcome and trust stay with us will be both enjoyable and comfortable
+        """+Hotel_Name+""" offers a selection of business services and facilities.which are detailed in the booklet,
+        placed on the writing table in your room.Should you require any assistance or have any specific
+        requirements,please do not hesitate to contact me extension(999).</font></p></dd>
+        <pre>
+        <dd><font size="3" color="black">"""+Booking_details+"""</font>
+        <font size="3" color="black">"""+message+"""</font>
+        <font size="3" color="black">Mobile Number:"""+phone+"""</font>
+        <font size="3" color="black">Arrival Date:"""+arrival+"""</font>
+        <font size="3" color="black">Depature Date:"""+depature+"""</font>
+        <font size="3" color="black">Adult:"""+adult+"""</font>
+        <font size="3" color="black">Child:"""+child+"""</font>
+        <font size="3" color="black">Room Type:"""+room_type+"""</font>
+        <font size="3" color="black">Number of Nights: """+no_of_nights+"""</font>
+        <font size="3" color="black">Rooms:"""+rooms+"""</font>
+        <font size="3" color="black">Pickupdrop:"""+pickupdrop+"""</font></dd></pre>
+        <dd>     
+        <font size="3" color="black">With best regards / Yours sincerely,</font></dd>
+        <dd>
+        <font size="3" color="black">Hotel Manager</font></dt></dd>
+    
         </dl>
         </body>
         </html>
