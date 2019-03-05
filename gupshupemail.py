@@ -10,7 +10,6 @@ def gupshup(request):
     Hotel_email = 'qualityinn@gmail.com'
     name = request.args['name']
     phone= request.args['mobile']
-    code= request.args['code']
     arrival = request.args['arrival']
     depature = request.args['depature']
     rooms= request.args['rooms']
@@ -59,9 +58,8 @@ def gupshup(request):
       requirements,please do not hesitate to contact me extension(999).</font>
         </pre>
  
-        <p><font size="2" color="black">"""+Booking_details+"""</font></p>
-        <p><font size="2" color="black">"""+message+"""</font></p>
-        <p><font size="2" color="black">Country Code:"""+code+"""</font></p>
+        <font size="2" color="black">"""+Booking_details+"""</font>
+        <font size="2" color="black">"""+message+"""</font>
         <p><font size="2" color="black">Mobile Number:"""+phone+"""</font></p>
         <p><font size="2" color="black">Arrival Date:"""+arrival+"""</font></p>
         <p><font size="2" color="black">Depature Date:"""+depature+"""</font></p>
