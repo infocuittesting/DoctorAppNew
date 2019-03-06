@@ -8,12 +8,9 @@ from sqlwrapper import gensql,dbget,dbput
 def callfn(request):
     d = request.json
     sender = 'infocuit.testing@gmail.com'
-    #res =json.loads(dbget(" select new.user_profile.email from new.appointment join new.user_profile on new.appointment.mobile=new.user_profile.mobile \
+    res =json.loads(dbget(" select new.user_profile.email from new.appointment join new.user_profile on new.appointment.mobile=new.user_profile.mobile \
                             # where appointment_id='"+str(d['appointment_id'])+"'"))
-    res =json.loads(dbget("select  u.email from new.appointment as a join new.user_profile as u on a.mobile=u.mobile \
-         where u.mobile='"+str(d['mobile'])+"' and a.business_date='"+str(d['business_date'])+"' "))
     
-
     
     print('lenth',len(res))
 
