@@ -86,8 +86,8 @@ def Select_BusinessandDoctors(request):
               elif len(g_doc) == 1:
                   docoftime.append({'day': key,'' + g_doc[0]['session'] + '': "" + datetime.strptime(g_doc[0]['start_timing'], "%H:%M").strftime("%I:%M %p") + "-"
                   "" + datetime.strptime(g_doc[0]['end_timing'], "%H:%M").strftime("%I:%M %p") + ""})
-              else:
-                  print("bus else")
+              elif len(g_doc) == 0:
+                  pass
 
           print("doc", docoftime)
 
@@ -126,8 +126,8 @@ def Select_BusinessandDoctors(request):
                   elif len(g_doc1) == 1:
                       doc1.append({'day': key1, '' + g_doc1[0]['session'] + '': "" + datetime.strptime(g_doc1[0]['start_timing'],"%H:%M").strftime("%I:%M %p") + "-"
                                  "" + datetime.strptime(g_doc1[0]['end_timing'], "%H:%M").strftime("%I:%M %p") + ""})
-                  else:
-                      print("bus else")
+                  elif len(doc1) == 0:
+                      pass
                   print("doc_timing", doc1,type(doc1))
               docinbus['doctor_details'][0]['doctorstimings'] = doc1
               #print("process doc", doc)
