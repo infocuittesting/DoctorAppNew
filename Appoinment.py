@@ -112,24 +112,29 @@ def updatetoken(request):
 def count(request):
     try:
         d = request.json
+        token_status = ['Booked', 'Cancel','Checkout']
         doctorid = json.loads(dbget("select count(*) as doctor_id from new.doctor_profile where doctor_profile_id ='"+d['doctor_id']+"'"))
         businessid = json.loads(dbget("select count(*) as business_id from new.business_profile where business_id ='"+str(d['business_id'])+"'"))
         if doctorid[0]['doctor_id'] == 1 and businessid[0]['business_id'] == 1:
                 token_count = json.loads(dbget("select token_status,count(*) from new.appointment where doctor_id='" + str(d['doctor_id']) + "'\
                        and business_id = '" + str(d['business_id']) + "'\
                           and business_date = '" + str(d['business_date']) + "' group by token_status"))
-                dic={}
+
+                dic = { ""+token+"":0 for token in token_status}
+                print("dict",dic)
+
                 for i in token_count:
-                    dic[i['token_status']]=i['count']
-                    
-                    
-                
+                    dic[i['token_status'].title()]=i['count']
+
+                print('final_dict', dic)        
                 return (json.dumps({"Message": "Token_status Counted  Sucessfully", "Message_Code": "TCS", "Service_Status": "Success","output": dic},indent=4))
         else:
               return(json.dumps({'Message': 'Invalid Data', 'Messag_Code': 'ID', 'Status': 'Failure'},indent=4))  
     except:
         return (json.dumps(
             {"Message": "Token number Counted Unsuccessful", "Message_Code": "TNUS", "Service_Status": "Failure"},indent=4))
+
+
 
 
 def livefeed(request):
