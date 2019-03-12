@@ -72,7 +72,7 @@ def update_doctorprofile(request):
         speclaization = doctors['Specialization']
         service = doctors['services']
         day = doctors['days']
-        doctor_id=doctors['doctor_id']
+        doctor_id=doctors['doctor_profile_id']
         doc_record = {k : v for k,v in doctors.items() if k not in ('Specialization','services','days','business_id','average_waiting_time','doctor_id')}
         print(doc_record )
         doctor = {k : v for k,v in doctors.items() if k  in ('doctor_profile_id')}
