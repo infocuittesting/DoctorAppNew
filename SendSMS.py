@@ -63,7 +63,7 @@ def Sendmessge(request):
                  message = request.json['message']
                  code =  request.json['code']
                  print(mobile, message, code)
-         else:
+         if request.method=='GET':
                 mobile = request.args['mobile']
                 message = request.args['message']
                 code =  request.args['code']
