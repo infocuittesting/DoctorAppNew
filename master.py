@@ -71,7 +71,7 @@ from gupshupemail import gupshup
 #------------Send SMS------------------#
 from SendSMS import sendsms
 from SendSMS import Sendmessge
-from gupshupsms import Sendmessge
+from gupshupsms import sendmessge
 #-----------select doc and bus all------
 from Select_BusinessAndDoctors import Select_BusinessandDoctors
 #----------------doctor_login-----------------#
