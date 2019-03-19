@@ -71,6 +71,7 @@ from gupshupemail import gupshup
 #------------Send SMS------------------#
 from SendSMS import sendsms
 from SendSMS import Sendmessge
+from gupshupsms import Sendmessge
 #-----------select doc and bus all------
 from Select_BusinessAndDoctors import Select_BusinessandDoctors
 #----------------doctor_login-----------------#
@@ -314,6 +315,9 @@ def Sendsms():
 @app.route('/SendMessge',methods=['GET','POST'])
 def sendmessge():
     return Sendmessge(request)
+@app.route('/gupMessge',methods=['GET','POST'])
+def sendmessge():
+    return sendmessge(request)
 
 #-----------select doc and bus all------
 @app.route('/Select_BusinessandDoctors',methods=['POST'])
