@@ -13,4 +13,3 @@ worker: gunicorn Select_BusinessAndDoctors.py
 worker: gunicorn reports.py
 worker: gunicorn gupshupemail.py
 worker: gunicorn doctor_login.py
-worker: gunicorn gupshupsms.py
