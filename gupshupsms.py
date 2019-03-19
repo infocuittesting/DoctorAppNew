@@ -5,7 +5,7 @@ import psycopg2
 from flask import Flask, request, jsonify
 
 
-def Sendmessge(request):
+def sendmessge(request):
          if request.method=='POST':
                 
                  mobile = request.json['mobile']
