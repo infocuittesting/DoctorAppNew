@@ -68,6 +68,7 @@ from reports import latlong_report
 from SendEmailAll import callFn
 from SendEmail import callfn
 from gupshupemail import gupshup
+from gupshupemail import gupshuptravel
 #------------Send SMS------------------#
 from SendSMS import sendsms
 from SendSMS import Sendmessge
@@ -304,6 +305,11 @@ def Sendemail():
 @app.route('/gupshupEmail',methods=['GET'])
 def gupshupemail():
     return gupshup(request)
+
+@app.route('/gupshuptravel',methods=['GET'])
+def gupshupeTravel():
+    return gupshuptravel(request)
+
 
 
 
