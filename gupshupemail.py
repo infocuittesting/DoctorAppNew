@@ -92,3 +92,70 @@ def gupshup(request):
     server.quit()
     return(json.dumps({'Return': 'Message Send Successfully',"Return_Code":"MSS","Status": "Success","Status_Code": "200"}, sort_keys=True, indent=4))
 
+def gupshuptravel(request):
+   # name = 'Nithya'
+   # email = 'nithya.infocuit@gmail.com'
+    #message = 'hihlo'
+
+    
+    name = request.args['name']
+    email = request.args['email']
+    message = request.args['message']
+
+    
+
+     
+    sender = 'infocuit.testing@gmail.com'
+    receiver = email
+    print(sender,type(sender),receiver,type(receiver))
+     
+    #data = message.split("|")
+    #print(data)
+    subject = request.args['subject']
+    #subject = 'thirumal travels'
+    msg = MIMEMultipart()
+    msg['from'] = sender
+    msg['to'] = receiver
+    msg['subject'] = subject
+    # Create the body of the message (a plain-text and an HTML version)
+    html = """\
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <meta charset="utf-8">
+        </head>
+        <body>
+        
+        <font size="3" color="black">Dear """+name+""",</font>
+         
+        
+        <dd><p><font size="2" color="black">"""+message+"""</font></p></dd>
+       <dd><p><font size="2" color="black">We are delighted that you have selected our Thirumal travels On behalf of the entire team at the
+         Thirumal travels,extend you a very welcome and trust stay with us will be both enjoyable and comfortable
+       Thirumal travels offers a selection of business services and facilities.which are detailed in the booklet,
+        Should you require any assistance or have any specific
+        requirements,please do not hesitate to contact me extension(999).</font></p></dd>
+        
+
+        </body>
+        </html>
+        """
+
+     
+     
+    #msg.attach(MIMEText(msg['subject'],'plain'))
+    msg.attach(MIMEText(html,'html'))
+     
+    gmailuser = 'infocuit.testing@gmail.com'
+    password = 'infocuit@123'
+    server = smtplib.SMTP('smtp.gmail.com',587)
+    server.starttls()
+    server.login(gmailuser,password)
+    text = msg.as_string()
+    server.sendmail(sender,receiver,text)
+    print ("the message has been sent successfully")
+    server.quit()
+    return(json.dumps({'Return': 'Message Send Successfully',"Return_Code":"MSS","Status": "Success","Status_Code": "200"}, sort_keys=True, indent=4))
+
+
+
