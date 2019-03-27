@@ -9,7 +9,7 @@ def callfn(request):
     d = request.json
     sender = 'infocuit.testing@gmail.com'
     res =json.loads(dbget(" select new.user_profile.email from new.appointment join new.user_profile on new.appointment.mobile=new.user_profile.mobile \
-                            # where appointment_id='"+str(d['appointment_id'])+"'"))
+                             where appointment_id='"+str(d['appointment_id'])+"'"))
     
     
     print('lenth',len(res))
