@@ -130,11 +130,7 @@ def gupshuptravel(request):
          
         
         <dd><p><font size="2" color="black">"""+message+"""</font></p></dd>
-       <dd><p><font size="2" color="black">We are delighted that you have selected our Thirumal travels On behalf of the entire team at the
-         Thirumal travels,extend you a very welcome and trust stay with us will be both enjoyable and comfortable
-       Thirumal travels offers a selection of business services and facilities.which are detailed in the booklet,
-        Should you require any assistance or have any specific
-        requirements,please do not hesitate to contact me extension(999).</font></p></dd>
+       
         
 
         </body>
